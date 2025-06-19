@@ -1,0 +1,59 @@
+------CRIANDO DATABASE CLINICAVET-------
+
+CREATE TABLE owners (
+    ID INT AUTO_INCREMENT,
+    full_name varchar(100),
+    age INT,
+    PRIMARY KEY(ID)
+);
+
+CREATE TABLE species (
+    ID INT AUTO_INCREMENT,
+    name varchar(100),
+    PRIMARY KEY(ID)
+);
+
+CREATE TABLE animals (
+    ID INT AUTO_INCREMENT,
+    name varchar(100),
+    date_of_birth date,
+    escape_attempts INT,
+    neutered bit,
+    weight_kg decimal,
+    species_id int,
+    owner_id int,
+    PRIMARY KEY(ID),
+    FOREIGN KEY (owner_id) REFERENCES owners(ID),
+    FOREIGN KEY (species_id) REFERENCES species (ID)
+);
+
+
+CREATE TABLE vets (
+    ID INT AUTO_INCREMENT,
+    name varchar(300),
+    age INT,
+    date_of_graduation date,
+    PRIMARY KEY(ID)
+);
+
+CREATE TABLE specializations(
+  vets_id integer NOT NULL,
+  species_id integer NOT NULL,
+  FOREIGN KEY (vets_id) REFERENCES vets (ID) ON DELETE RESTRICT ON UPDATE CASCADE,
+  FOREIGN KEY (species_id) REFERENCES species (ID) ON DELETE RESTRICT ON UPDATE CASCADE
+);
+
+/* visits table */
+CREATE TABLE visits(
+  vets_id integer NOT NULL,
+  animals_id integer NOT NULL,
+  date_of_visit date,
+  FOREIGN KEY (vets_id) REFERENCES vets (ID) ON DELETE RESTRICT ON UPDATE CASCADE,
+  FOREIGN KEY (animals_id) REFERENCES animals (ID) ON DELETE RESTRICT ON UPDATE CASCADE
+);
+
+
+-- commands to create indexes for the visits and owners table
+CREATE INDEX animals_id_asc ON visits(animals_id asc);
+CREATE INDEX vet_id_asc ON visits(vets_id asc);
+CREATE INDEX email_asc ON owners(email asc);

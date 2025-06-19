@@ -1,0 +1,77 @@
+ESCOLA
+
+--TABELA DISCIPLINA---
+
+CREATE TABLE disciplina(
+cod_disciplina int primary key,
+nome_disciplina varchar(30) not null
+);
+
+
+----TABELA PROFESSOR-----
+CREATE TABLE professor (
+matricula_professor int primary key,
+nome_professor varchar(255),
+titulacao varchar(50),
+telefone varchar(50),
+cidade varchar(50)
+);
+
+----TABELA TURMA-----
+CREATE TABLE turma (
+cod_turma int primary key,
+cod_disciplina int not null, 
+ano int(4) not null, 
+semestre int(1) not null, 
+matricula_professor int(3) not null,
+FOREIGN KEY (cod_disciplina) REFERENCES disciplina(cod_disciplina),
+FOREIGN KEY (matricula_professor) REFERENCES professor(matricula_professor)
+);
+
+
+----TABELA ALUNO-----
+CREATE TABLE aluno (
+matricula_aluno int(3) primary key,
+nome_aluno varchar (40) not null,
+endereco varchar (100) not null,
+telefone int(20),
+cidade varchar(30)
+);
+
+;
+
+----TABELA TURMA_ALUNO----
+CREATE TABLE turma_aluno(
+cod_turma int primary key,
+cod_disciplina int (3) not null,
+matricula_aluno int(3),
+
+FOREIGN KEY (cod_turma) REFERENCES turma(cod_turma),
+FOREIGN KEY (matricula_aluno) REFERENCES aluno(matricula_aluno)
+);
+
+
+-----TABELA AVALIACAO-----
+CREATE TABLE avaliacao (
+cod_avaliacao int(3) primary key,
+cod_disciplina int (3) not null,
+matricula_aluno int(3) not null,
+cod_turma int not null,
+peso int(2) not null,
+
+FOREIGN KEY (cod_turma) REFERENCES turma(cod_turma),
+FOREIGN KEY (cod_disciplina) REFERENCES disciplina(cod_disciplina),
+FOREIGN KEY (matricula_aluno) REFERENCES aluno(matricula_aluno)
+);
+
+-----TABELA NOTA----
+CREATE TABLE nota (
+cod_disciplina int (3) primary key,
+cod_avaliacao int(3) primary key,
+matricula_aluno int(3),
+nota int(5) not null,
+FOREIGN KEY (cod_disciplina) REFERENCES disciplina(cod_disciplina),
+FOREIGN KEY (cod_avaliacao) REFERENCES avaliacao(cod_avaliacao),
+FOREIGN KEY (matricula_aluno) REFERENCES aluno(matricula_aluno)
+);
+

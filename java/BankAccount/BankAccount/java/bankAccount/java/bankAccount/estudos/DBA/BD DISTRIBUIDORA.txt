@@ -1,0 +1,59 @@
+----BD DISTRIBUIDORA -----
+
+Nesta atividade você terá que criar os comandos SQL a partir do modelo ER. Este modelo é baseado em um exemplo de uma distribuidora. Observe a imagem abaixo com o modelo ER.
+
+CREATE TABLE FABRICANTE (
+cod_fabricante INTEGER PRIMARY KEY,
+nome VARCHAR (255) NOT NULL,
+cidade VARCHAR (100) NOT NULL,
+telefone VARCHAR(20) NOT NULL
+);
+
+CREATE TABLE TIPO_PRODUTO(
+cod_tipo_produto INTEGER PRIMARY KEY,
+nome VARCHAR (255)
+);
+
+CREATE TABLE PRODUTO (
+cod_produto INTEGER PRIMARY KEY,
+cod_tipo_produto integer references tipo_produto(cod_tipo_produto) not null,
+cod_fabricante integer references fabricante(cod_fabricante) not null,
+nome VARCHAR (255) NOT NULL,
+peso VARCHAR (25) NOT NULL,
+medida VARCHAR (255) NOT NULL,
+preco DECIMAL (6,2) NOT NULL, 
+qtde_estoque INTEGER NOT NULL
+);
+
+CREATE TABLE TRANSPORTADORA (
+cod_transportadora INTEGER PRIMARY KEY,
+nome VARCHAR (255) NOT NULL
+);
+
+CREATE TABLE CARGO (
+cod_cargo INTEGER PRIMARY KEY,
+nome VARCHAR (255) NOT NULL,
+salario_base DECIMAL(6,2) NOT NULL
+);
+
+CREATE TABLE FUNCIONARIO (
+cod_funcionario INTEGER PRIMARY KEY,
+cod_cargo INTEGER REFERENCES cargo(cod_cargo) NOT NULL,
+nome VARCHAR (255) NOT NULL,
+cidade VARCHAR (255) NOT NULL,
+ano_contratacao INTEGER NOT NULL
+);
+
+CREATE TABLE NOTA_FISCAL (
+cod_nota_fiscal integer primary key,
+cod_transportadora INTEGER REFERENCES transportadora(cod_transportadora) not null,
+cod_funcionario INTEGER REFERENCES funcionario(cod_funcionario) NOT NULL,
+valor_frete DECIMAL(6,2) NOT NULL
+);
+
+CREATE TABLE ITEM_NOTA (
+cod_nota_fiscal integer primary key,
+cod_produto integer references produto(cod_produto) not null,
+quantidade INTEGER NOT NULL,
+valor_unitario DECIMAL (6,2) NOT NULL
+);

@@ -1,0 +1,34 @@
+omo=0
+ariel=0
+tixan=0
+
+while True:
+ voto = int (input("Na sua opiniao qual é o melhor sabão em pó:\n| 1-OMO \n| 2-ARIEL\n| 3-TIXAN\n| 4-SAIR: '"))
+
+ match voto:
+ case 1:
+ omo += 1
+ case 2:
+ ariel += 1
+ case 3:
+ tixan += 1
+ case _:
+ print("Opção inválida")
+
+
+ if (voto ==4):
+ break
+
+total = omo+ariel+tixan
+if total > 0:
+ pct_omo = (omo / total) * 100
+ pct_ariel = (ariel / total) * 100
+ pct_tixan = (tixan / total) * 100
+
+vencedor = max(("OMO", omo), ("ARIEL", ariel), ("TIXAN", tixan), key=lambda x: x[1])
+
+print(f"Quantidade de votos:", total)
+print(f"OMO: {omo} votos ({pct_omo:.2f}%)")
+print(f"Ariel: {ariel} votos ({pct_ariel:.2f}%)")
+print(f"Tixal: {tixan} votos ({pct_tixan:.2f}%)")
+print (f"O vencedor é: {vencedor}")
